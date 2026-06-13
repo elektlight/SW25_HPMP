@@ -98,22 +98,25 @@
 
     <div id="app" class="w-full max-w-[1200px] mx-auto space-y-6 pb-12">
         
-        <header class="bg-orange-100 p-4 rounded-2xl border-2 border-orange-300 flex flex-wrap justify-between items-center gap-4">
+        <header class="bg-orange-100 p-4 rounded-2xl border-2 border-orange-300">
             <div>
-                <h1 class="text-2xl font-black text-orange-800">⚔️ SW2.5 戦闘管理ツール</h1>
-                <p class="text-xs text-orange-600 font-bold">キャラクターのHP・MPと状態を管理</p>
-            </div>
-            <div class="flex space-x-3 w-full sm:w-auto">
-                <button onclick="sleep(3)" class="rest-btn pop-btn bg-amber-400 text-amber-950 border-2 border-amber-600 shadow-amber-700">⌛ 3時間睡眠</button>
-                <button onclick="sleep(6)" class="rest-btn pop-btn bg-orange-500 text-white border-2 border-orange-700 shadow-orange-800">⛺ 6時間睡眠</button>
+                <h1 class="text-2xl font-black text-orange-800">⚔️ SW2.5 戦闘管理ツール/h1>
+                <p class="text-xs text-orange-600 font-bold">キャラクターの状態を管理するツール</p>
             </div>
         </header>
 
-        <div class="flex flex-wrap items-end gap-2 border-b-4 border-orange-500 pt-2">
-            <div id="tabs-container" class="flex flex-wrap gap-1"></div>
-            <button onclick="addNewCharacter()" class="px-3 py-1.5 mb-1 bg-emerald-600 text-white font-bold rounded-t-lg text-xs pop-btn border-2 border-emerald-700">
-                ＋ 新キャラ追加
-            </button>
+        <div class="sticky top-0 z-50 bg-orange-50/95 backdrop-blur-sm py-2 border-b-4 border-orange-500 flex flex-wrap justify-between items-end gap-3">
+            <div class="flex flex-wrap items-end gap-2">
+                <div id="tabs-container" class="flex flex-wrap gap-1"></div>
+                <button onclick="addNewCharacter()" class="px-3 py-1.5 mb-1 bg-emerald-600 text-white font-bold rounded-t-lg text-xs pop-btn border-2 border-emerald-700">
+                    ＋ 新キャラ追加
+                </button>
+            </div>
+            
+            <div class="flex space-x-2 mb-1 w-full sm:w-auto">
+                <button onclick="sleep(3)" class="rest-btn pop-btn bg-amber-400 text-amber-950 border-2 border-amber-600 shadow-amber-700 whitespace-nowrap min-w-[110px]">⌛ 3時間睡眠</button>
+                <button onclick="sleep(6)" class="rest-btn pop-btn bg-orange-500 text-white border-2 border-orange-700 shadow-orange-800 whitespace-nowrap min-w-[110px]">⛺ 6時間睡眠</button>
+            </div>
         </div>
 
         <div class="grid grid-cols-12 gap-6 items-start">
@@ -128,22 +131,25 @@
                         </div>
                     </div>
 
-                    <h2 class="font-black text-orange-700 text-lg border-b-2 border-orange-100 pb-1">📊 HP / MP</h2>
+                    <h2 class="font-black text-orange-700 text-lg border-b-2 border-orange-100 pb-1">📊 生命力 / 精神力</h2>
                     
-                    <div class="p-4 bg-red-50 rounded-xl border-2 border-red-100 flex flex-col items-center">
-                        <p class="text-xs font-black text-red-500 mb-1">HP</p>
+                    <div class="p-4 bg-red-50 rounded-xl border-2 border-red-100 flex flex-col items-center relative">
+                        <div class="flex w-full justify-between items-center mb-1">
+                            <span class="text-xs font-black text-red-500">HP</span>
+                            <button onclick="healFull('hp')" class="px-2 py-0.5 bg-red-600 text-white text-[10px] font-black rounded-md pop-btn border border-red-700">❤️ 全快</button>
+                        </div>
                         <div class="flex items-center justify-center space-x-2 mb-3">
-                            <span id="display-hp" class="text-4xl font-black text-red-700">0</span>
+                            <input type="number" id="input-curr-hp" onchange="syncDirectResource('hp')" class="w-20 bg-transparent font-black text-red-700 text-4xl outline-none border-b-2 border-dashed border-red-400 text-center focus:border-red-600">
                             <span class="text-red-300 text-2xl">/</span>
                             <input type="number" id="input-max-hp" onchange="syncState()" class="w-16 bg-transparent font-black text-red-700 text-2xl outline-none border-b-2 border-dashed border-red-300 text-center">
                         </div>
                         <div class="w-full space-y-2">
                             <div class="flex justify-center gap-1">
-                                <button onclick="updateResource('hp', -1)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-1</button>
-                                <button onclick="updateResource('hp', -3)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-3</button>
-                                <button onclick="updateResource('hp', -5)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-5</button>
-                                <button onclick="updateResource('hp', -10)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-10</button>
-                             </div>
+                                <button onclick="updateResource('hp', -1)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-10</button>
+                                <button onclick="updateResource('hp', -3)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-5</button>
+                                <button onclick="updateResource('hp', -5)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-3</button>
+                                <button onclick="updateResource('hp', -10)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-1</button>
+                            </div>
                             <div class="flex justify-center gap-1">
                                 <button onclick="updateResource('hp', 1)" class="pop-btn px-2 py-1 bg-red-500 text-white text-xs font-bold rounded">+1</button>
                                 <button onclick="updateResource('hp', 3)" class="pop-btn px-2 py-1 bg-red-500 text-white text-xs font-bold rounded">+3</button>
@@ -153,19 +159,22 @@
                         </div>
                     </div>
 
-                    <div class="p-4 bg-blue-50 rounded-xl border-2 border-blue-100 flex flex-col items-center">
-                        <p class="text-xs font-black text-blue-500 mb-1">MP</p>
+                    <div class="p-4 bg-blue-50 rounded-xl border-2 border-blue-100 flex flex-col items-center relative">
+                        <div class="flex w-full justify-between items-center mb-1">
+                            <span class="text-xs font-black text-blue-500">MP</span>
+                            <button onclick="healFull('mp')" class="px-2 py-0.5 bg-blue-600 text-white text-[10px] font-black rounded-md pop-btn border border-blue-700">💎 全快</button>
+                        </div>
                         <div class="flex items-center justify-center space-x-2 mb-3">
-                            <span id="display-mp" class="text-4xl font-black text-blue-700">0</span>
+                            <input type="number" id="input-curr-mp" onchange="syncDirectResource('mp')" class="w-20 bg-transparent font-black text-blue-700 text-4xl outline-none border-b-2 border-dashed border-blue-400 text-center focus:border-blue-600">
                             <span class="text-blue-300 text-2xl">/</span>
                             <input type="number" id="input-max-mp" onchange="syncState()" class="w-16 bg-transparent font-black text-blue-700 text-2xl outline-none border-b-2 border-dashed border-blue-300 text-center">
                         </div>
                         <div class="w-full space-y-2">
                             <div class="flex justify-center gap-1">
-                                <button onclick="updateResource('mp', -1)" class="pop-btn px-2 py-1 bg-white border border-blue-300 text-blue-600 text-xs font-bold rounded">-1</button>
-                                <button onclick="updateResource('mp', -3)" class="pop-btn px-2 py-1 bg-white border border-blue-300 text-blue-600 text-xs font-bold rounded">-3</button>
-                                <button onclick="updateResource('mp', -5)" class="pop-btn px-2 py-1 bg-white border border-blue-300 text-blue-600 text-xs font-bold rounded">-5</button>
-                                <button onclick="updateResource('mp', -10)" class="pop-btn px-2 py-1 bg-white border border-blue-300 text-blue-600 text-xs font-bold rounded">-10</button>
+                                <button onclick="updateResource('mp', -1)" class="pop-btn px-2 py-1 bg-white border border-blue-300 text-blue-600 text-xs font-bold rounded">-10</button>
+                                <button onclick="updateResource('mp', -3)" class="pop-btn px-2 py-1 bg-white border border-red-300 text-red-600 text-xs font-bold rounded">-5</button>
+                                <button onclick="updateResource('mp', -5)" class="pop-btn px-2 py-1 bg-white border border-blue-300 text-blue-600 text-xs font-bold rounded">-3</button>
+                                <button onclick="updateResource('mp', -10)" class="pop-btn px-2 py-1 bg-white border border-blue-300 text-blue-600 text-xs font-bold rounded">-1</button>
                             </div>
                             <div class="flex justify-center gap-1">
                                 <button onclick="updateResource('mp', 1)" class="pop-btn px-2 py-1 bg-blue-500 text-white text-xs font-bold rounded">+1</button>
@@ -241,7 +250,7 @@
                                     <td class="text-center py-1 font-black text-lg text-violet-600" id="total-magic-damage-buff">+0</td>
                                 </tr>
                                 <tr class="border-b border-orange-100">
-                                    <td class="py-2 font-black text-slate-800">🏃 回避値</td>
+                                    <td class="py-2 font-black text-slate-800">🏃 回避力</td>
                                     <td class="py-1 flex justify-center">
                                         <input type="number" id="base-evade" onchange="syncState()" class="w-12 text-center bg-transparent border-b border-dashed border-slate-400 text-base">
                                     </td>
@@ -297,7 +306,7 @@
                                     <td class="text-center py-1 font-black text-lg text-orange-600" id="total-life-res">0</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-2 font-black text-slate-800">🧠 精神抵抗力</td>
+                                    <td class="py-2 font-black text-slate-800">❤ 精神抵抗力</td>
                                     <td class="py-1 flex justify-center">
                                         <input type="number" id="base-mind-res" onchange="syncState()" class="w-12 text-center bg-transparent border-b border-dashed border-slate-400 text-base">
                                     </td>
@@ -327,7 +336,7 @@
 
         <section class="pop-card-purple p-6">
             <div class="flex justify-between items-center border-b-2 border-violet-200 pb-2 mb-4">
-                <h2 class="font-black text-violet-700 text-lg flex items-center">🔮 魔法データと魔力管理</h2>
+                <h2 class="font-black text-violet-700 text-lg flex items-center">🔮 魔法データと魔力管理（消費MP対応）</h2>
                 <button onclick="addMagic()" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold pop-btn text-xs">＋ 魔法・系統を追加</button>
             </div>
             <div id="magics-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -464,6 +473,21 @@
             renderContents();
         }
 
+        function syncDirectResource(key) {
+            const char = getCurrentChar();
+            if (!char) return;
+            if (key === 'hp') {
+                const val = parseInt(getEl('input-curr-hp').value);
+                char.hp = Math.min(Math.max(0, isNaN(val) ? 0 : val), char.maxHp);
+            }
+            if (key === 'mp') {
+                const val = parseInt(getEl('input-curr-mp').value);
+                char.mp = Math.min(Math.max(0, isNaN(val) ? 0 : val), char.maxMp);
+            }
+            saveData();
+            renderContents();
+        }
+
         function saveData() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
         }
@@ -473,6 +497,21 @@
             if (!char) return;
             if (key === 'hp') char.hp = Math.min(Math.max(0, char.hp + delta), char.maxHp);
             if (key === 'mp') char.mp = Math.min(Math.max(0, char.mp + delta), char.maxMp);
+            saveData();
+            renderContents();
+        }
+
+        function healFull(key) {
+            const char = getCurrentChar();
+            if (!char) return;
+            if (key === 'hp') {
+                char.hp = char.maxHp;
+                showToast(`${char.name}: HPが全回復しました！`);
+            }
+            if (key === 'mp') {
+                char.mp = char.maxMp;
+                showToast(`${char.name}: MPが全回復しました！`);
+            }
             saveData();
             renderContents();
         }
@@ -502,7 +541,6 @@
             showToast(`${char.name}: 睡眠回復を適用しました`);
         }
 
-        // キャラ管理
         function addNewCharacter() {
             const newId = "c_" + Date.now();
             appState.characters.push({
@@ -539,7 +577,6 @@
             }
         }
 
-        // 武器データの管理
         function addWeapon() {
             const char = getCurrentChar();
             if(!char.weapons) char.weapons = [];
@@ -573,7 +610,6 @@
             }
         }
 
-        // 魔法データの管理
         function addMagic() {
             const char = getCurrentChar();
             if(!char.magics) char.magics = [];
@@ -607,7 +643,6 @@
             }
         }
 
-        // 持続効果の管理
         function addEffect() {
             const char = getCurrentChar();
             if(!char.effects) char.effects = [];
@@ -653,7 +688,6 @@
             }
         }
 
-        // 消耗アイテムの管理
         function addItem() {
             const char = getCurrentChar();
             if(!char.consumedItems) char.consumedItems = [];
@@ -689,7 +723,6 @@
             }
         }
 
-        // タブ描画
         function renderTabs() {
             const container = getEl('tabs-container');
             container.innerHTML = '';
@@ -703,16 +736,14 @@
             });
         }
 
-        // 全体描画
         function renderContents() {
             const char = getCurrentChar();
             if (!char) return;
 
-            // プロファイル・基本ステ
             getEl('char-name').value = char.name;
-            getEl('display-hp').innerText = char.hp;
+            getEl('input-curr-hp').value = char.hp;
             getEl('input-max-hp').value = char.maxHp;
-            getEl('display-mp').innerText = char.mp;
+            getEl('input-curr-mp').value = char.mp;
             getEl('input-max-mp').value = char.maxMp;
 
             getEl('base-evade').value = char.baseEvade;
@@ -738,7 +769,6 @@
             getEl('buff-magic-cast').value = char.buffMagicCast;
             getEl('buff-magic-damage').value = char.buffMagicDamage;
 
-            // 計算合計値表示
             getEl('total-hit-buff').innerText = char.buffHit >= 0 ? `+${char.buffHit}` : char.buffHit;
             getEl('total-damage-buff').innerText = char.buffDamage >= 0 ? `+${char.buffDamage}` : char.buffDamage;
             getEl('total-magic-cast-buff').innerText = char.buffMagicCast >= 0 ? `+${char.buffMagicCast}` : char.buffMagicCast;
@@ -750,7 +780,6 @@
             getEl('total-life-res').innerText = char.baseLifeRes + char.buffLifeRes;
             getEl('total-mind-res').innerText = char.baseMindRes + char.buffMindRes;
 
-            // 1. 武器カードエリア描画
             const wContainer = getEl('weapons-container');
             wContainer.innerHTML = '';
             if(!char.weapons) char.weapons = [];
@@ -800,7 +829,6 @@
                 wContainer.appendChild(card);
             });
 
-            // 2. 魔法・魔力カードエリア描画 (消費MPを追加)
             const mContainer = getEl('magics-container');
             mContainer.innerHTML = '';
             if(!char.magics) char.magics = [];
@@ -809,7 +837,7 @@
                 card.className = "magic-card relative group";
                 const finalCast = m.baseCast + char.buffMagicCast;
                 const finalMDmg = char.buffMagicDamage + (m.bonusDamage || 0);
-                if (m.mpCost === undefined) m.mpCost = 0; // 後方互換性
+                if (m.mpCost === undefined) m.mpCost = 0;
 
                 card.innerHTML = `
                     <button onclick="removeMagic('${m.id}')" class="absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 font-bold">×</button>
@@ -857,7 +885,6 @@
                 mContainer.appendChild(card);
             });
 
-            // 3. 持続効果エリア描画
             const eContainer = getEl('effects-container');
             eContainer.innerHTML = '';
             if(!char.effects) char.effects = [];
@@ -885,7 +912,6 @@
                 eContainer.appendChild(tr);
             });
 
-            // 4. 消耗アイテムエリア描画
             const iContainer = getEl('items-container');
             iContainer.innerHTML = '';
             if(!char.consumedItems) char.consumedItems = [];
